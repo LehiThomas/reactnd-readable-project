@@ -19,11 +19,132 @@ export const getCategories = () => {
   	.catch(err => console.log(err))
 }
 
-
-export const getPosts = (category) => {
+//Posts
+export const getPosts = category => {
   const url = category ? `${api}/${category}/posts` : `${api}/posts`
   fetch(url, { headers })  
     .then(res => res.json())
+    .then(data => data)
+  	.catch(err => console.log(err))
+}
+
+export const getPost = id => {
+  fetch(`${api}/posts/${id}`, { headers })  
+    .then(res => res.json())
+    .then(data => data)
+  	.catch(err => console.log(err))
+}
+
+export const addPost = post => {
+  const data = {
+    ...post,
+    timeStamp: Date.now()
+  }
+
+  fetch(`${api}/posts/`, { 
+    method: 'POST',
+    headers,
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+    .then(data => data)
+  	.catch(err => console.log(err))
+}
+
+export const updatePost = post => {
+  const data = {
+    ...post,
+    timeStamp: Date.now()
+  }
+
+  fetch(`${api}/posts/${post.id}`, { 
+    method: 'PUT',
+    headers,
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+    .then(data => data)
+  	.catch(err => console.log(err))
+}
+
+export const deletePost = post => {
+  fetch(`${api}/posts/${post.id}`, { 
+    method: 'DELETE',
+    headers
+  }).then(res => res.json())
+    .then(data => data)
+  	.catch(err => console.log(err))
+}
+
+export const votePost = (id, option) => {
+  fetch(`${api}/posts/${id}`, { 
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ option })
+  }).then(res => res.json())
+    .then(data => data)
+  	.catch(err => console.log(err))
+}
+
+
+// Coments
+export const getComments = id => {
+  fetch(`${api}/posts/${id}/comments`, { headers })  
+    .then(res => res.json())
+    .then(data => data)
+  	.catch(err => console.log(err))
+}
+
+export const getComment = id => {
+  fetch(`${api}/posts/${id}`, { headers })  
+    .then(res => res.json())
+    .then(data => data)
+  	.catch(err => console.log(err))
+}
+
+export const addComment = comment => {
+  const data = {
+    ...comment,
+    timeStamp: Date.now()
+  }
+
+  fetch(`${api}/comments`, { 
+    method: 'POST',
+    headers,
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+    .then(data => data)
+  	.catch(err => console.log(err))
+}
+
+export const updateComment = comment => {
+  const data = {
+    ...comment,
+    timeStamp: Date.now()
+  }
+
+  fetch(`${api}/comments/${comment.id}`, { 
+    method: 'PUT',
+    headers,
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+    .then(data => data)
+  	.catch(err => console.log(err))
+}
+
+export const deleteComment = comment => {
+  fetch(`${api}/comments/${comment.id}`, { 
+    method: 'DELETE',
+    headers
+  }).then(res => res.json())
+    .then(data => data)
+  	.catch(err => console.log(err))
+}
+
+export const voteComment = (id, option) => {
+  fetch(`${api}/comments/${id}`, { 
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ option })
+  }).then(res => res.json())
     .then(data => data)
   	.catch(err => console.log(err))
 }
