@@ -15,7 +15,15 @@ const headers = {
 export const getCategories = () => {
   fetch(`${api}/categories`, { headers })  
     .then(res => res.json())
-    .then(data => console.log(data.categories))
+    .then(data => data.categories)
   	.catch(err => console.log(err))
 }
 
+
+export const getPosts = (category) => {
+  const url = category ? `${api}/${category}/posts` : `${api}/posts`
+  fetch(url, { headers })  
+    .then(res => res.json())
+    .then(data => data)
+  	.catch(err => console.log(err))
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
 import '../App.css';
-import { getCategories } from '../utils/api';
+import { getCategories, getPosts } from '../utils/api';
 
 class App extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class App extends Component {
 
   componentDidMount() {
     getCategories();
-    //getPosts();
+    getPosts();
   }
 
   render() {
