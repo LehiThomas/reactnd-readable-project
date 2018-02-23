@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const api = 'http://localhost:3001'
 
 let token = window.localStorage.token;
@@ -12,17 +10,10 @@ const headers = {
   'Content-Type': 'application/json'
 }
 
-export const getCategories = () => {
-  axios.get(`${api}/categories`, { headers })
-    .then(function (response) {
-      console.log(response.data.categories);
-      return response.data.categories;
-    })
-    .catch(function (error) {
-      console.log(error);
-      return error
-    });
-}
+export const getCategories = () =>
+  fetch(`${api}/categories`, { headers })
+    .then(res => res.json())
+    .then(data => data.categories)
 
 //Posts
 export const getPosts = category => {
@@ -33,12 +24,12 @@ export const getPosts = category => {
   	.catch(err => console.log(err))
 }
 
-export const getPost = id => {
+export const getPost = id => 
   fetch(`${api}/posts/${id}`, { headers })
     .then(res => res.json())
     .then(data => data)
   	.catch(err => console.log(err))
-}
+
 
 export const addPost = post => {
   const data = {
@@ -70,16 +61,16 @@ export const updatePost = post => {
   	.catch(err => console.log(err))
 }
 
-export const deletePost = post => {
+export const deletePost = post => 
   fetch(`${api}/posts/${post.id}`, {
     method: 'DELETE',
     headers
   }).then(res => res.json())
     .then(data => data)
   	.catch(err => console.log(err))
-}
 
-export const votePost = (id, option) => {
+
+export const votePost = (id, option) => 
   fetch(`${api}/posts/${id}`, {
     method: 'POST',
     headers,
@@ -87,23 +78,22 @@ export const votePost = (id, option) => {
   }).then(res => res.json())
     .then(data => data)
   	.catch(err => console.log(err))
-}
 
 
 // Coments
-export const getComments = id => {
+export const getComments = id => 
   fetch(`${api}/posts/${id}/comments`, { headers })
     .then(res => res.json())
     .then(data => data)
   	.catch(err => console.log(err))
-}
 
-export const getComment = id => {
+
+export const getComment = id => 
   fetch(`${api}/posts/${id}`, { headers })
     .then(res => res.json())
     .then(data => data)
   	.catch(err => console.log(err))
-}
+
 
 export const addComment = comment => {
   const data = {
@@ -135,16 +125,16 @@ export const updateComment = comment => {
   	.catch(err => console.log(err))
 }
 
-export const deleteComment = comment => {
+export const deleteComment = comment => 
   fetch(`${api}/comments/${comment.id}`, {
     method: 'DELETE',
     headers
   }).then(res => res.json())
     .then(data => data)
   	.catch(err => console.log(err))
-}
 
-export const voteComment = (id, option) => {
+
+export const voteComment = (id, option) => 
   fetch(`${api}/comments/${id}`, {
     method: 'POST',
     headers,
@@ -152,4 +142,3 @@ export const voteComment = (id, option) => {
   }).then(res => res.json())
     .then(data => data)
   	.catch(err => console.log(err))
-}

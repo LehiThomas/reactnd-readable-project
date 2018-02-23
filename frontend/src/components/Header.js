@@ -12,16 +12,7 @@ class Header extends Component {
 
     render() {
         const { categories } = this.props
-        console.log(categories)
-        // const list = categories.map((category, index) => {
-        //     return (
-        //         <MenuItem key={index} >
-        //             category.name
-        //             {/* <Link to={`/${category.name}`}>{category.name}</Link> */}
-        //         </MenuItem>
-        //     )
-        // })
-
+        
         return (
             <Navbar>
                 <Navbar.Header>
@@ -34,7 +25,13 @@ class Header extends Component {
                         Home
                     </NavItem>
                     <NavDropdown eventKey={2} title="Dropdown" id="basic-nav-dropdown">
-                        {/* { list } */}
+                        { categories.length > 0 && categories.map((category, index) => {
+                            return (
+                                <MenuItem eventKey={index} >
+                                    <Link to={`/${category.name}`}>{category.name}</Link>
+                                </MenuItem>
+                            )
+                        })}
                         <MenuItem divider />
                         <MenuItem eventKey={2.4}>Separated link</MenuItem>
                     </NavDropdown>
@@ -45,16 +42,12 @@ class Header extends Component {
 
 }
 
-const mapStateToProps = ({ categories }) => {
-    return {
-        categories: categories
-    }
-}
+const mapStateToProps = ({ categories }) => ({
+    categories,
+  })
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        getCategories: () => dispatch(fetchCategories())
-    }
-}
+const mapDispatchToProps = (dispatch) => ({
+    getCategories: () => dispatch(fetchCategories())
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
