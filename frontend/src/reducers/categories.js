@@ -5,8 +5,8 @@ const categories = (state = {}, action) => {
         case GET_CATEGORIES:
             return {
                 ...state,
-                categories
-            }    
+                categories: action.categories
+            }
 
         default:
             return state;

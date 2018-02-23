@@ -1,4 +1,4 @@
-//import axios from 'axios';
+import axios from 'axios';
 
 const api = 'http://localhost:3001'
 
@@ -12,24 +12,29 @@ const headers = {
   'Content-Type': 'application/json'
 }
 
-export const getAllCategories = () => {
-  fetch(`${api}/categories`, { headers })  
-    .then(res => res.json())
-    .then(data => data.categories)
-  	.catch(err => console.log(err))
+export const getCategories = () => {
+  axios.get(`${api}/categories`, { headers })
+    .then(function (response) {
+      console.log(response.data.categories);
+      return response.data.categories;
+    })
+    .catch(function (error) {
+      console.log(error);
+      return error
+    });
 }
 
 //Posts
 export const getPosts = category => {
   const url = category ? `${api}/${category}/posts` : `${api}/posts`
-  fetch(url, { headers })  
+  fetch(url, { headers })
     .then(res => res.json())
     .then(data => data)
   	.catch(err => console.log(err))
 }
 
 export const getPost = id => {
-  fetch(`${api}/posts/${id}`, { headers })  
+  fetch(`${api}/posts/${id}`, { headers })
     .then(res => res.json())
     .then(data => data)
   	.catch(err => console.log(err))
@@ -41,7 +46,7 @@ export const addPost = post => {
     timeStamp: Date.now()
   }
 
-  fetch(`${api}/posts/`, { 
+  fetch(`${api}/posts/`, {
     method: 'POST',
     headers,
     body: JSON.stringify(data)
@@ -56,7 +61,7 @@ export const updatePost = post => {
     timeStamp: Date.now()
   }
 
-  fetch(`${api}/posts/${post.id}`, { 
+  fetch(`${api}/posts/${post.id}`, {
     method: 'PUT',
     headers,
     body: JSON.stringify(data)
@@ -66,7 +71,7 @@ export const updatePost = post => {
 }
 
 export const deletePost = post => {
-  fetch(`${api}/posts/${post.id}`, { 
+  fetch(`${api}/posts/${post.id}`, {
     method: 'DELETE',
     headers
   }).then(res => res.json())
@@ -75,7 +80,7 @@ export const deletePost = post => {
 }
 
 export const votePost = (id, option) => {
-  fetch(`${api}/posts/${id}`, { 
+  fetch(`${api}/posts/${id}`, {
     method: 'POST',
     headers,
     body: JSON.stringify({ option })
@@ -87,14 +92,14 @@ export const votePost = (id, option) => {
 
 // Coments
 export const getComments = id => {
-  fetch(`${api}/posts/${id}/comments`, { headers })  
+  fetch(`${api}/posts/${id}/comments`, { headers })
     .then(res => res.json())
     .then(data => data)
   	.catch(err => console.log(err))
 }
 
 export const getComment = id => {
-  fetch(`${api}/posts/${id}`, { headers })  
+  fetch(`${api}/posts/${id}`, { headers })
     .then(res => res.json())
     .then(data => data)
   	.catch(err => console.log(err))
@@ -106,7 +111,7 @@ export const addComment = comment => {
     timeStamp: Date.now()
   }
 
-  fetch(`${api}/comments`, { 
+  fetch(`${api}/comments`, {
     method: 'POST',
     headers,
     body: JSON.stringify(data)
@@ -121,7 +126,7 @@ export const updateComment = comment => {
     timeStamp: Date.now()
   }
 
-  fetch(`${api}/comments/${comment.id}`, { 
+  fetch(`${api}/comments/${comment.id}`, {
     method: 'PUT',
     headers,
     body: JSON.stringify(data)
@@ -131,7 +136,7 @@ export const updateComment = comment => {
 }
 
 export const deleteComment = comment => {
-  fetch(`${api}/comments/${comment.id}`, { 
+  fetch(`${api}/comments/${comment.id}`, {
     method: 'DELETE',
     headers
   }).then(res => res.json())
@@ -140,7 +145,7 @@ export const deleteComment = comment => {
 }
 
 export const voteComment = (id, option) => {
-  fetch(`${api}/comments/${id}`, { 
+  fetch(`${api}/comments/${id}`, {
     method: 'POST',
     headers,
     body: JSON.stringify({ option })

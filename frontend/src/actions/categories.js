@@ -7,6 +7,13 @@ export const getCategories = (categories) => ({
 })
 
 export const fetchCategories = () => dispatch => (
-    API.getAllCategories()
+    API.getCategories()
       .then(categories => dispatch(getCategories(categories)))
   )
+
+// export const fetchCategories = () => {
+//     return dispatch => {
+//       return API.getCategories()
+//         .then(categories => dispatch(getCategories(categories)))
+//     }
+//   }
