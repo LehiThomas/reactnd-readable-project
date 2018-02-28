@@ -9,4 +9,4 @@ export const getCategories = (categories) => ({
 export const fetchCategories = () => dispatch => (
     API.getCategories()
       .then(categories => dispatch(getCategories(categories)))
-  )
+)

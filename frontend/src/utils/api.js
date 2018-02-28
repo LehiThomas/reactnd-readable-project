@@ -18,13 +18,12 @@ export const getCategories = () =>
 //Posts
 export const getPosts = category => {
   const url = category ? `${api}/${category}/posts` : `${api}/posts`
-  fetch(url, { headers })
+  return fetch(url, { headers })
     .then(res => res.json())
     .then(data => data)
-  	.catch(err => console.log(err))
 }
 
-export const getPost = id => 
+export const getPost = id =>
   fetch(`${api}/posts/${id}`, { headers })
     .then(res => res.json())
     .then(data => data)
@@ -61,7 +60,7 @@ export const updatePost = post => {
   	.catch(err => console.log(err))
 }
 
-export const deletePost = post => 
+export const deletePost = post =>
   fetch(`${api}/posts/${post.id}`, {
     method: 'DELETE',
     headers
@@ -70,7 +69,7 @@ export const deletePost = post =>
   	.catch(err => console.log(err))
 
 
-export const votePost = (id, option) => 
+export const votePost = (id, option) =>
   fetch(`${api}/posts/${id}`, {
     method: 'POST',
     headers,
@@ -80,15 +79,15 @@ export const votePost = (id, option) =>
   	.catch(err => console.log(err))
 
 
-// Coments
-export const getComments = id => 
+// Comments
+export const getComments = id =>
   fetch(`${api}/posts/${id}/comments`, { headers })
     .then(res => res.json())
     .then(data => data)
   	.catch(err => console.log(err))
 
 
-export const getComment = id => 
+export const getComment = id =>
   fetch(`${api}/posts/${id}`, { headers })
     .then(res => res.json())
     .then(data => data)
@@ -125,7 +124,7 @@ export const updateComment = comment => {
   	.catch(err => console.log(err))
 }
 
-export const deleteComment = comment => 
+export const deleteComment = comment =>
   fetch(`${api}/comments/${comment.id}`, {
     method: 'DELETE',
     headers
@@ -134,7 +133,7 @@ export const deleteComment = comment =>
   	.catch(err => console.log(err))
 
 
-export const voteComment = (id, option) => 
+export const voteComment = (id, option) =>
   fetch(`${api}/comments/${id}`, {
     method: 'POST',
     headers,
