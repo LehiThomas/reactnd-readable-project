@@ -5,14 +5,15 @@ import { ListGroup, Button, DropdownButton, MenuItem } from "react-bootstrap";
 import { sortByDate, sortByVotes } from "../utils/helpers";
 
 import PostItem from "../components/PostItem";
-constructor() {
-  super();
-  this.state = {
-    sortBy: "date"
-  };
-}
 
 class PostContainer extends Component {
+  constructor() {
+    super();
+    this.state = {
+      sortBy: "date"
+    };
+  }
+
   componentDidMount() {
     const category = this.props.match.params.category;
     this.props.fetchPosts(category);
