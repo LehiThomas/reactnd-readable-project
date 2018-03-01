@@ -1,38 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchPosts } from '../actions/posts';
-import {
-  Grid,
-  Row,
-  Col,
-  ListGroup
-} from 'react-bootstrap';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchPosts } from "../actions/posts";
+import { ListGroup, Button, DropdownButton, MenuItem } from "react-bootstrap";
+import { sortByDate, sortByVotes } from "../utils/helpers";
 
-const PostItem = props => {
-  const { post } = props;
-  return (
-    <li
-      className="list-group-item"
-      onClick={() => {}}
-    >
-      <Grid>
-      <Row className="show-grid">
-        <Col md={1} className="text-center">
-          <h1>{post.voteScore}</h1>
-        </Col>
-        <Col md={11}>
-          <h3>{post.title}</h3>
-          <p>
-            Category: {post.category} |
-            Date Posted: {post.timestamp}
-          </p>
-          <p>{post.body}</p>
-          <p><em>Comments: {post.commentCount}</em></p>
-        </Col>
-      </Row>
-      </Grid>
-    </li>
-  )
+import PostItem from "../components/PostItem";
+constructor() {
+  super();
+  this.state = {
+    sortBy: "date"
+  };
 }
 
 class PostContainer extends Component {
@@ -48,29 +25,47 @@ class PostContainer extends Component {
     }
   }
 
+  setSortBy = sortBy => {
+    this.setState({ sortBy });
+  };
+
+  sortPosts = (posts, sortBy) => {
+    return sortBy === "votes" ? sortByVotes(posts) : sortByDate(posts);
+  };
+
   render() {
-    console.log(">>>>>>>", this.props)
     const { posts, match } = this.props;
+    const sortedPosts = this.sortPosts(posts, this.state.sortBy);
+
     return (
-      <ListGroup>
-        {posts.length > 0 ? posts.map((post, key) => (
-          <PostItem key={key} post={post} />
-        )) : (
-          <div>
-            <h2>No posts in {match.params.category && match.params.category}.</h2>
-          </div>
-        )}
-      </ListGroup>
+      <div>
+        <ListGroup>
+          {posts === undefined || posts.length < 1 ? (
+            <div>
+              <h2>
+                No posts in {match.params.category && match.params.category}.
+              </h2>
+              <Button bsStyle="primary">Add a Post</Button>
+            </div>
+          ) : (
+            posts.map((post, key) => <PostItem key={key} post={post} />)
+          )}
+        </ListGroup>
+        <DropdownButton title="Sort By" onChange={this.handleSorting}>
+          <MenuItem value="date">Most Recent</MenuItem>
+          <MenuItem value="votes">Votes</MenuItem>
+        </DropdownButton>
+      </div>
     );
   }
 }
 
-const mapStateToProps = ({ posts }) => ({
-  posts,
-})
+const mapStateToProps = ({ posts }) => {
+  return { posts: posts.posts };
+};
 
 const mapDispatchToProps = dispatch => ({
-  fetchPosts: category => dispatch(fetchPosts(category)),
-})
+  fetchPosts: category => dispatch(fetchPosts(category))
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(PostContainer);
