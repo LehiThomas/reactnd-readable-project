@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom';
-import '../App.css';
+import React, { Component } from "react";
+import { BrowserRouter, Switch, Route, withRouter } from "react-router-dom";
+import "../App.css";
 
-import Header from '../components/Header';
-import PostContainer from './PostContainer';
+import Header from "../components/Header";
+import PostListContainer from "./PostListContainer";
+import PostContainer from "../containers/PostContainer";
 
 class App extends Component {
   render() {
@@ -11,10 +12,13 @@ class App extends Component {
       <div className="App">
         <Header />
         <div className="container">
-          <Switch>
-          <Route exact path='/' component={PostContainer} />
-          <Route exact path='/:category' component={PostContainer} />
-          </Switch>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/" component={PostListContainer} />
+              <Route exact path="/:category" component={PostListContainer} />
+              <Route exact path="/:category/:id" component={PostContainer} />
+            </Switch>
+          </BrowserRouter>
         </div>
       </div>
     );

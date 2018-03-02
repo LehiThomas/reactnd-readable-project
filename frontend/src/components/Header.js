@@ -15,7 +15,7 @@ class Header extends Component {
       <Navbar>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to="/">React Readables</Link>
+            <Link to="/">React Readable</Link>
           </Navbar.Brand>
         </Navbar.Header>
         <Nav>
