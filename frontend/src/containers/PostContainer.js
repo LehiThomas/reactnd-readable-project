@@ -33,19 +33,11 @@ class PostContainer extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    this.props.fetchPost(id).then(function() {
-      if (this.props) {
-        return <Redirect to="/404" />;
-      }
-    });
+    this.props.fetchPost(id)
     this.props.fetchComments(id);
-  }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.id !== this.props.match.params.id) {
-      const id = nextProps.match.params.id;
-      this.props.fetchPost(id);
-      this.props.fetchComments(id);
+    if (Object.keys(this.props.post).length === 0) {
+      return <Redirect to="/404" />;
     }
   }
 
@@ -176,7 +168,7 @@ class PostContainer extends Component {
     // if (Object.keys(post).length === 0) {
     //   return <Redirect to="/404" />;
     // }
-
+    console.log("my props", this.props)
     if (this.state.redirect) {
       return <Redirect to="/" />;
     }
