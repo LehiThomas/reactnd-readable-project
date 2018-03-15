@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchPosts } from "../actions/posts";
-import { ListGroup, Button, DropdownButton, MenuItem } from "react-bootstrap";
+import uuid from "uuid";
+import { Panel, ListGroup, DropdownButton, MenuItem } from "react-bootstrap";
+
+import { fetchPosts, addPost } from "../actions/posts";
 import { sortByDate, sortByVotes } from "../utils/helpers";
 
 import PostItem from "../components/PostItem";
+import AddPostComment from "../components/addPostComment";
 
 class PostListContainer extends Component {
   constructor() {
@@ -36,24 +39,27 @@ class PostListContainer extends Component {
     }
   };
 
+  postPost = form => {
+    const post = {
+      author: form.author,
+      body: form.body,
+      category: form.category,
+      title: form.title,
+      voteScore: 0,
+      commentCount: 0,
+      timestamp: Date.now(),
+      id: uuid.v4()
+    };
+
+    this.props.addPost(post);
+  };
+
   render() {
     const { posts, match } = this.props;
     const sortedPosts = this.sortPosts(posts, this.state.sortBy);
 
     return (
       <div>
-        <ListGroup>
-          {posts === undefined || posts.length < 1 ? (
-            <div>
-              <h2>
-                No posts in {match.params.category && match.params.category}.
-              </h2>
-              <Button bsStyle="primary">Add a Post</Button>
-            </div>
-          ) : (
-            sortedPosts.map((post, key) => <PostItem key={key} post={post} />)
-          )}
-        </ListGroup>
         <DropdownButton
           title="Sort By"
           id="sortByDropdown"
@@ -62,6 +68,21 @@ class PostListContainer extends Component {
           <MenuItem value="date">Most Recent</MenuItem>
           <MenuItem value="votes">Votes</MenuItem>
         </DropdownButton>
+        <ListGroup>
+          {posts === undefined || posts.length < 1 ? (
+            <div>
+              <h2>
+                No posts in {match.params.category && match.params.category}.
+              </h2>
+            </div>
+          ) : (
+            sortedPosts.map((post, key) => <PostItem key={key} post={post} />)
+          )}
+        </ListGroup>
+        <Panel.Body>
+          <div>Add a new post</div>
+          <AddPostComment type="post" submitPostComment={this.postPost} />
+        </Panel.Body>
       </div>
     );
   }
@@ -72,6 +93,7 @@ const mapStateToProps = ({ posts }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  addPost: post => dispatch(addPost(post)),
   fetchPosts: category => dispatch(fetchPosts(category))
 });
 

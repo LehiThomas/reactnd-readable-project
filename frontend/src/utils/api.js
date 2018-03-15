@@ -31,37 +31,25 @@ export const getPost = id =>
     .then(data => data)
     .catch(err => console.log(err));
 
-export const addPost = post => {
-  const data = {
-    ...post,
-    timeStamp: Date.now()
-  };
-
+export const addPost = post =>
   fetch(`${api}/posts/`, {
     method: "POST",
     headers,
-    body: JSON.stringify(data)
+    body: JSON.stringify(post)
   })
     .then(res => res.json())
     .then(data => data)
     .catch(err => console.log(err));
-};
 
-export const updatePost = post => {
-  const data = {
-    ...post,
-    timeStamp: Date.now()
-  };
-
+export const updatePost = post =>
   fetch(`${api}/posts/${post.id}`, {
     method: "PUT",
     headers,
-    body: JSON.stringify(data)
+    body: JSON.stringify(post)
   })
     .then(res => res.json())
     .then(data => data)
     .catch(err => console.log(err));
-};
 
 export const deletePost = post =>
   fetch(`${api}/posts/${post.id}`, {
@@ -101,7 +89,7 @@ export const addComment = comment => {
     timeStamp: Date.now()
   };
 
-  fetch(`${api}/comments`, {
+  return fetch(`${api}/comments`, {
     method: "POST",
     headers,
     body: JSON.stringify(data)
@@ -112,15 +100,10 @@ export const addComment = comment => {
 };
 
 export const updateComment = comment => {
-  const data = {
-    ...comment,
-    timeStamp: Date.now()
-  };
-
-  fetch(`${api}/comments/${comment.id}`, {
+  return fetch(`${api}/comments/${comment.id}`, {
     method: "PUT",
     headers,
-    body: JSON.stringify(data)
+    body: JSON.stringify(comment)
   })
     .then(res => res.json())
     .then(data => data)

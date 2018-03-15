@@ -1,24 +1,24 @@
 import React, { Component } from "react";
-import { BrowserRouter, Switch, Route, withRouter } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 import "../App.css";
 
 import Header from "../components/Header";
 import PostListContainer from "./PostListContainer";
-import PostContainer from "../containers/PostContainer";
-
+import PostContainer from "./PostContainer";
+import NotFound from "./NotFound";
 class App extends Component {
   render() {
     return (
       <div className="App">
         <Header />
         <div className="container">
-          <BrowserRouter>
-            <Switch>
-              <Route exact path="/" component={PostListContainer} />
-              <Route exact path="/:category" component={PostListContainer} />
-              <Route exact path="/:category/:id" component={PostContainer} />
-            </Switch>
-          </BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={PostListContainer} />
+            <Route exact path="/404" component={NotFound} />
+            <Route exact path="/:category" component={PostListContainer} />
+            <Route exact path="/:category/:id" component={PostContainer} />
+            <Route path="*" component={NotFound} />
+          </Switch>
         </div>
       </div>
     );
