@@ -66,11 +66,13 @@ class AddPostComment extends Component {
     const { title, author, body, category } = this.state;
     if (author === "" || body === "") {
       alert("Please fill in all fields before submitting");
-    } else if (
-      (this.props.type === "post" && title === "") ||
-      category === ""
-    ) {
-      alert("Please fill in all fields before submitting");
+    } else if (this.props.type === "post") {
+      if (title === "" || category === "") {
+        alert("Please fill in all fields before submitting");
+      } else {
+        this.props.submitPostComment(this.state);
+        this.clearForm();
+      }
     } else {
       this.props.submitPostComment(this.state);
       this.clearForm();

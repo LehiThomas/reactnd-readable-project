@@ -19,17 +19,25 @@ import Vote from "../components/Vote";
 import AddPostComment from "../components/addPostComment";
 
 class PostContainer extends Component {
-  state = {
-    author: "",
-    body: this.props.post.body,
-    title: this.props.post.title,
-    redirect: false,
-    canEdit: false
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      author: "",
+      body: this.props.post.body,
+      title: this.props.post.title,
+      redirect: false,
+      canEdit: false
+    };
+  }
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    this.props.fetchPost(id);
+    this.props.fetchPost(id).then(function() {
+      if (this.props) {
+        return <Redirect to="/404" />;
+      }
+    });
     this.props.fetchComments(id);
   }
 
@@ -165,9 +173,9 @@ class PostContainer extends Component {
   render() {
     const { post } = this.props;
 
-    if (Object.keys(post).length === 0) {
-      return <Redirect to="/404" />;
-    }
+    // if (Object.keys(post).length === 0) {
+    //   return <Redirect to="/404" />;
+    // }
 
     if (this.state.redirect) {
       return <Redirect to="/" />;
