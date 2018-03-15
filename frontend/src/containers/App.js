@@ -5,7 +5,7 @@ import "../App.css";
 import Header from "../components/Header";
 import PostListContainer from "./PostListContainer";
 import PostContainer from "./PostContainer";
-import NotFound from "./NotFound";
+import PageNotFound from "./PageNotFound";
 class App extends Component {
   render() {
     return (
@@ -14,10 +14,10 @@ class App extends Component {
         <div className="container">
           <Switch>
             <Route exact path="/" component={PostListContainer} />
-            <Route exact path="/404" component={NotFound} />
+            <Route exact path="/404" component={PageNotFound} />
             <Route exact path="/:category" component={PostListContainer} />
             <Route exact path="/:category/:id" component={PostContainer} />
-            <Route path="*" component={NotFound} />
+            <Route path="*" component={PageNotFound} />
           </Switch>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Grid, Row, Col } from "react-bootstrap";
-import { calculateDate } from "../utils/helpers";
+import { getDate } from "../utils/helpers";
 
 const PostItem = props => {
   const { post } = props;
@@ -14,7 +14,7 @@ const PostItem = props => {
               <h3>{post.title}</h3>
               <h5>By: {post.author}</h5>
               <p>
-                Date Posted: {calculateDate(post.timestamp)} | Comments:{" "}
+                Date Posted: {getDate(post.timestamp)} | Comments:{" "}
                 {post.commentCount} | Votes: {post.voteScore}
               </p>
             </Col>

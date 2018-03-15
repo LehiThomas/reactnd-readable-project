@@ -26,8 +26,6 @@ class Header extends Component {
                   <Link to={`/${category.name}`}>{category.name}</Link>
                 </MenuItem>
               ))}
-            <MenuItem divider />
-            <MenuItem eventKey={2.4}>Separated link</MenuItem>
           </NavDropdown>
         </Nav>
       </Navbar>

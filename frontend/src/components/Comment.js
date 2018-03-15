@@ -9,7 +9,7 @@ import {
 } from "react-bootstrap";
 
 import { deleteComment, updateComment } from "../actions/comments";
-import { calculateDate } from "../utils/helpers";
+import { getDate } from "../utils/helpers";
 
 import Vote from "./Vote";
 
@@ -74,7 +74,7 @@ class Comment extends Component {
         <div>
           <h4>{comment.title}</h4>
           <h6>
-            {comment.author} | Date Posted: {calculateDate(comment.timestamp)}
+            {comment.author} | Date Posted: {getDate(comment.timestamp)}
           </h6>
           <p>{comment.body}</p>
           <Vote item={comment} />

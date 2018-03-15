@@ -8,6 +8,6 @@ export const sortByVotes = list => {
   return list.sort((a, b) => b.voteScore > a.voteScore);
 };
 
-export const calculateDate = date => {
+export const getDate = date => {
   return Moment(date).format("MMM D, YYYY");
 };
