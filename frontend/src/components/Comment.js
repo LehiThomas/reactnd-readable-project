@@ -72,23 +72,11 @@ class Comment extends Component {
     } else {
       return (
         <div>
-          <h4>{comment.title}</h4>
-          <h6>
-            {comment.author} | Date Posted: {getDate(comment.timestamp)}
-          </h6>
           <p>{comment.body}</p>
-          <Vote item={comment} />
-        </div>
-      );
-    }
-  };
-
-  render() {
-    const { comment } = this.props;
-    return (
-      <Panel>
-        {this.renderComment(comment)}
-        {!this.state.canEdit && (
+          <p>
+            {comment.author} | Date Posted: {getDate(comment.timestamp)} |
+            Votes: <Vote item={comment} />
+          </p>
           <div>
             <Button bsStyle="primary" bsSize="small" onClick={this.editComment}>
               <Glyphicon glyph="pencil" /> Edit Comment
@@ -101,9 +89,14 @@ class Comment extends Component {
               <Glyphicon glyph="remove" /> Delete Comment
             </Button>
           </div>
-        )}
-      </Panel>
-    );
+        </div>
+      );
+    }
+  };
+
+  render() {
+    const { comment } = this.props;
+    return <Panel>{this.renderComment(comment)}</Panel>;
   }
 }
 

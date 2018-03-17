@@ -15,7 +15,6 @@ import { fetchComments, addComment } from "../actions/comments";
 
 import Post from "../components/Post";
 import Comment from "../components/Comment";
-import Vote from "../components/Vote";
 import AddPostComment from "../components/addPostComment";
 
 class PostContainer extends Component {
@@ -24,21 +23,27 @@ class PostContainer extends Component {
 
     this.state = {
       author: "",
-      body: this.props.post.body,
-      title: this.props.post.title,
+      body: "",
+      title: "",
       redirect: false,
       canEdit: false
     };
+    console.log("post", this.props);
   }
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    this.props.fetchPost(id)
+    this.props.fetchPost(id);
     this.props.fetchComments(id);
 
     if (Object.keys(this.props.post).length === 0) {
       return <Redirect to="/404" />;
     }
+
+    this.setState({
+      title: this.props.post.title,
+      body: this.props.post.body
+    });
   }
 
   renderComments = comments => {
@@ -75,7 +80,9 @@ class PostContainer extends Component {
   editPost = () => {
     let canEdit = this.state.canEdit ? false : true;
     this.setState({
-      canEdit
+      canEdit,
+      title: this.props.post.title,
+      body: this.props.post.body
     });
   };
 
@@ -135,7 +142,6 @@ class PostContainer extends Component {
         <div>
           <Panel.Body>
             <Post post={post} />
-            <Vote item={post} />
             <div>
               <Button bsStyle="primary" bsSize="small" onClick={this.editPost}>
                 <Glyphicon glyph="pencil" /> Edit Post
@@ -165,10 +171,6 @@ class PostContainer extends Component {
   render() {
     const { post } = this.props;
 
-    // if (Object.keys(post).length === 0) {
-    //   return <Redirect to="/404" />;
-    // }
-    console.log("my props", this.props)
     if (this.state.redirect) {
       return <Redirect to="/" />;
     }

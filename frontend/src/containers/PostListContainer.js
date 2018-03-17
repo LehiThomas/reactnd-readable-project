@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import uuid from "uuid";
-import { Panel, ListGroup, DropdownButton, MenuItem } from "react-bootstrap";
+import {
+  Panel,
+  ListGroup,
+  DropdownButton,
+  MenuItem,
+  Grid,
+  Row
+} from "react-bootstrap";
 
 import { fetchPosts, addPost } from "../actions/posts";
 import { sortByDate, sortByVotes } from "../utils/helpers";
@@ -59,7 +66,7 @@ class PostListContainer extends Component {
     const sortedPosts = this.sortPosts(posts, this.state.sortBy);
 
     return (
-      <div>
+      <div md={5}>
         <DropdownButton
           title="Sort By"
           id="sortByDropdown"
@@ -76,7 +83,13 @@ class PostListContainer extends Component {
               </h2>
             </div>
           ) : (
-            sortedPosts.map((post, key) => <PostItem key={key} post={post} />)
+            <Grid>
+              <Row className="show-grid">
+                {sortedPosts.map((post, key) => (
+                  <PostItem key={key} post={post} />
+                ))}
+              </Row>
+            </Grid>
           )}
         </ListGroup>
         <Panel.Body>
